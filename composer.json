@@ -1,0 +1,40 @@
+{
+    "name": "amb/omnipay-cayan-smart-payments",
+    "description": "Gateway for the legacy Cayan Smart Payments",
+    "keywords": [
+        "omnipay",
+        "cayan-smart-payments"
+    ],
+    "homepage": "https://github.com/americas-mailbox/omnipay-cayan-smart-payments",
+    "license": "MIT",
+    "require": {
+        "omnipay/common": "v3.0-alpha.2"
+    },
+    "require-dev": {
+        "omnipay/tests": "~3.0",
+        "squizlabs/php_codesniffer": "^3",
+        "phpro/grumphp": "^0.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\SmartPayments\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "League\\SmartPayments\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 src/",
+        "fix-style": "phpcbf -p --standard=PSR2 src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
