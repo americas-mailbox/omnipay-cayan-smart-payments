@@ -13,9 +13,9 @@ use Omnipay\Common\AbstractGateway;
  * @method \Omnipay\Common\Message\RequestInterface refund(array $options = [])
  * @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
  * @method \Omnipay\Common\Message\RequestInterface void(array $options = [])
- * @method \Omnipay\Common\Message\RequestInterface createCard(array $options = [])
  * @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = [])
  * @method \Omnipay\Common\Message\RequestInterface deleteCard(array $options = [])
+ * @method \Omnipay\Common\Message\RequestInterface authorize(array $options = [])
  */
 class Gateway extends AbstractGateway
 {
@@ -43,11 +43,11 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @return Message\AuthorizeRequest
+     * @return Message\PurchaseRequest
      */
-    public function authorize(array $parameters = [])
+    public function createCard(array $options = [])
     {
-        return $this->createRequest('\Omnipay\SmartPayments\Message\AuthorizeRequest', $parameters);
+        return $this->createRequest('\Omnipay\SmartPayments\Message\CreateCardRequest', $options);
     }
 
     /**
@@ -58,19 +58,19 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\SmartPayments\Message\PurchaseRequest', $options);
     }
 
-public
-function __call($name, $arguments)
-{
-    // TODO: Implement @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface capture(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface purchase(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface completePurchase(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface refund(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface void(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface createCard(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = array())
-    // TODO: Implement @method \Omnipay\Common\Message\RequestInterface deleteCard(array $options = array())
-}
+    public function __call(
+        $name,
+        $arguments
+    ) {
+        // TODO: Implement @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = [])
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface capture(array $options = array())
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface purchase(array $options = array())
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface completePurchase(array $options = array())
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface refund(array $options = array())
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface void(array $options = array())
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = array())
+        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface deleteCard(array $options = array())
+    }
 }

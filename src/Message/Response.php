@@ -18,7 +18,7 @@ class Response extends AbstractResponse
 
     public function isSuccessful()
     {
-        return isset($this->data['success']);
+        return $this->data['success'];
     }
 
     public function getTransactionReference()
@@ -27,5 +27,4 @@ class Response extends AbstractResponse
             return $this->data['reference'];
         }
     }
-
 }

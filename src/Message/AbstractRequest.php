@@ -35,30 +35,46 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function sendData($data)
     {
+        $data['MagData'] = '';
+        $data['PNRef'] = '';
+        $data['ExtData'] = '';
+        $data['InvNum'] = 'WEB ';
         $url = $this->getEndpoint().'?'.http_build_query($data, '', '&');
-        $response = $this->httpClient->post($url);
+        $post_string = http_build_query($data, '', '&');
+        //        $response = $this->httpClient->post($url);
+        // Standard payment gateway transaction
+        // Use the CURL library to establish a connection,
+        // submit the post, and record the response.
+        $request = curl_init($this->getEndpoint().'?'); // initiate curl object
+        curl_setopt($request, CURLOPT_HEADER, 0); // set to 0 to eliminate header info from response
+        curl_setopt($request, CURLOPT_RETURNTRANSFER, 1); // Returns response data instead of TRUE(1)
+        curl_setopt($request, CURLOPT_POSTFIELDS, $post_string); // use HTTP POST to send form data
+        //curl_setopt($request, CURLOPT_SSL_VERIFYPEER, FALSE); // uncomment this line if you get no gateway response.
+        $response = curl_exec($request); // execute curl post and store results in $this->response
+        curl_close($request); // close curl object
 
-        $data = json_decode($response->getBody(), true);
-
-        return $this->createResponse($data);
+        return $this->createResponse($response);
     }
 
     protected function getBaseData()
     {
         return [
-            'transaction_id' => $this->getTransactionId(),
-            'expire_date' => $this->getCard()->getExpiryDate('mY'),
-            'start_date' => $this->getCard()->getStartDate('mY'),
+            "UserName" => $this->getUsername(),
+            "Password" => $this->getPassword(),
         ];
     }
 
     protected function getEndpoint()
     {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+        return $this->liveEndpoint;
     }
 
-    protected function createResponse($data)
+    protected function createResponse($response)
     {
-        return $this->response = new Response($this, $data);
+        $factory = $this->getResponseFactory();
+
+        return $this->response = (new $factory)($this, $response);
     }
+
+    abstract protected function getResponseFactory();
 }
