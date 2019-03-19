@@ -27,4 +27,11 @@ class Response extends AbstractResponse
             return $this->data['reference'];
         }
     }
+
+    public function getMessage()
+    {
+        if (isset($this->data['message'])) {
+            return $this->data['message'];
+        }
+    }
 }

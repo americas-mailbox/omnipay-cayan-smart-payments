@@ -35,9 +35,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
     public function sendData($data)
     {
-        $data['MagData'] = '';
-        $data['PNRef'] = '';
-        $data['ExtData'] = '';
         $data['InvNum'] = 'WEB ';
         $url = $this->getEndpoint().'?'.http_build_query($data, '', '&');
         $post_string = http_build_query($data, '', '&');
@@ -59,8 +56,17 @@ abstract class AbstractRequest extends BaseAbstractRequest
     protected function getBaseData()
     {
         return [
-            "UserName" => $this->getUsername(),
-            "Password" => $this->getPassword(),
+            'Street'     => '',
+            'CardNum'    => '',
+            'ExpDate'    => '',
+            'NameOnCard' => '',
+            'CVNum'      => '',
+            'Zip'        => '',
+            'ExtData'    => '',
+            'MagData'    => '',
+            "Password"   => $this->getPassword(),
+            'PNRef'      => '',
+            "UserName"   => $this->getUsername(),
         ];
     }
 
@@ -73,7 +79,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         $factory = $this->getResponseFactory();
 
-        return $this->response = (new $factory)($this, $response);
+        return $this->response = (new $factory)->handle($this, $response);
     }
 
     abstract protected function getResponseFactory();

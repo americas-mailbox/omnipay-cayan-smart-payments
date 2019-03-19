@@ -1,5 +1,7 @@
 <?php
 namespace Omnipay\SmartPayments\Message;
+use Omnipay\SmartPayments\Factory\PurchaseResponseFactory;
+
 /**
  * Authorize Request
  *
@@ -9,14 +11,21 @@ class PurchaseRequest extends AbstractRequest
 {
     public function getData()
     {
-        if ($this->getCardReference()) {
-            return $this->getRepeatSaleData();
-        }
+        $data = array_merge(
+            $this->getBaseData(),
+            [
+                'TransType'  => 'RepeatSale',
+                'PNRef' => $this->getCardReference(),
+                'Amount' => $this->getAmount(),
+            ]
+        );
 
+        return $data;
     }
 
-    private function getRepeatSaleData()
-    {
 
+    protected function getResponseFactory()
+    {
+        return PurchaseResponseFactory::class;
     }
 }

@@ -21,9 +21,11 @@ class CreateCardResponseFactory
         $xml = new SimpleXMLElement($response);
         $cardReference = (string) $xml->PNRef;
         $isSuccessful = (string)$xml->RespMSG === 'Approved' ? true : false;
+        $message = (string) $xml->Message;
 
         return [
             'cardReference' => $cardReference,
+            'message' => $message,
             'success' => $isSuccessful,
         ];
     }

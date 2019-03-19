@@ -17,6 +17,7 @@ class CreateCardRequest extends AbstractRequest
         $card = $this->getCard();
         $card->validate();
         $data = array_merge(
+            $this->getBaseData(),
             [
                 'TransType'  => 'Auth',
                 'Amount'     => 0,
@@ -26,8 +27,7 @@ class CreateCardRequest extends AbstractRequest
                 'NameOnCard' => $card->getName(),
                 'CVNum'      => $card->getCvv(),
                 'Zip'        => $card->getBillingPostcode(),
-            ],
-            $this->getBaseData()
+            ]
         );
 
         return $data;
