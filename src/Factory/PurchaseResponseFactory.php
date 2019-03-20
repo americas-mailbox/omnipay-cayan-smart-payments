@@ -11,20 +11,6 @@ final class PurchaseResponseFactory
 {
     public function handle(PurchaseRequest $request, $response): PurchaseResponse
     {
-        $data = $this->extractDataFromResponse($response);
-
-        return new PurchaseResponse($request, $data);
-    }
-
-    private function extractDataFromResponse($response): array
-    {
-        $xml = new SimpleXMLElement($response);
-        $authorizationCode = (string) $xml->AuthCode;
-        $isSuccessful = (string)$xml->RespMSG === 'Approved' ? true : false;
-
-        return [
-            'authorizationCode' => $authorizationCode,
-            'success' => $isSuccessful,
-        ];
+        return new PurchaseResponse($request, new SimpleXMLElement($response));
     }
 }

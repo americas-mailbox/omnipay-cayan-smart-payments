@@ -10,28 +10,26 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Response extends AbstractResponse
 {
-    public function __construct(RequestInterface $request, $data)
-    {
-        $this->request = $request;
-        $this->data = $data;
-    }
+    /** @var SimpleXMLElement */
+    protected $data;
 
-    public function isSuccessful()
+    public function getCode()
     {
-        return $this->data['success'];
-    }
-
-    public function getTransactionReference()
-    {
-        if (isset($this->data['reference'])) {
-            return $this->data['reference'];
-        }
+        return (string) $this->data->AuthCode;
     }
 
     public function getMessage()
     {
-        if (isset($this->data['message'])) {
-            return $this->data['message'];
-        }
+        return (string) $this->data->Message;
+    }
+
+    public function isSuccessful()
+    {
+        return ((string) $this->data->RespMSG) === 'Approved' ? true : false;
+    }
+
+    public function getTransactionReference()
+    {
+        return (string) $this->data->PNRef;
     }
 }

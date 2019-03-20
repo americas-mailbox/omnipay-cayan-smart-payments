@@ -5,8 +5,4 @@ namespace Omnipay\SmartPayments\Message;
 
 final class PurchaseResponse extends Response
 {
-    public function getAuthorizationCode()
-    {
-        return $this->data['authorizationCode'];
-    }
 }

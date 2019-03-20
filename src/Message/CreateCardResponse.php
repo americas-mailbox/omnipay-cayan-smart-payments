@@ -6,6 +6,6 @@ class CreateCardResponse extends Response
 {
     public function getCardReference()
     {
-        return $this->data['cardReference'];
+        return (string) $this->data->PNRef;
     }
 }
