@@ -13,23 +13,33 @@ class Response extends AbstractResponse
     /** @var SimpleXMLElement */
     protected $data;
 
-    public function getCode()
+    public function getCode(): string
     {
         return (string) $this->data->AuthCode;
     }
 
-    public function getMessage()
+    public function getMessage(): string
     {
         return (string) $this->data->Message;
     }
 
-    public function isSuccessful()
+    public function isSuccessful(): bool
     {
         return ((string) $this->data->RespMSG) === 'Approved' ? true : false;
     }
 
-    public function getTransactionReference()
+    public function getTransactionReference(): string
     {
         return (string) $this->data->PNRef;
+    }
+
+    public function getResponseActionCode(): string
+    {
+        return (string) $this->data->Result;
+    }
+
+    public function getResponseActionMessage(): string
+    {
+        return (string) $this->data->RespMSG;
     }
 }

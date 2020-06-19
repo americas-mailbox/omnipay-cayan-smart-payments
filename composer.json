@@ -8,6 +8,7 @@
     "homepage": "https://github.com/americas-mailbox/omnipay-cayan-smart-payments",
     "license": "MIT",
     "require": {
+        "php": ">7.0",
         "ext-simplexml": "*",
         "omnipay/common": "^3"
     },

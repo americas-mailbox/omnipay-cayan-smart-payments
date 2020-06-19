@@ -4,7 +4,7 @@ namespace Omnipay\SmartPayments\Message;
 
 class CreateCardResponse extends Response
 {
-    public function getCardReference()
+    public function getCardReference(): string
     {
         return (string) $this->data->PNRef;
     }
