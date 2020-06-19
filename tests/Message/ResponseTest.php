@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace tests\Message;
+
 use League\SmartPayments\Test\Fixture\TestRequest;
 use Omnipay\SmartPayments\Message\Response;
 use Omnipay\Tests\TestCase;
@@ -75,6 +77,46 @@ class ResponseTest extends TestCase
 RESPONSE;
     }
 
+
+    public function testTransactionNotPermittedGetData()
+    {
+        $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
+        $this->assertEqualXMLStructure(
+            $this->xmlResponse($this->transactionNotPermittedPurchaseResponse()),
+            dom_import_simplexml($response->getData())
+        );
+    }
+
+    public function testTransactionNotPermittedGetMessage()
+    {
+        $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
+        $this->assertSame('57: Transaction not Permitted-Card', $response->getMessage());
+    }
+
+    public function testIsFailed()
+    {
+        $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
+        $this->assertSame(false, $response->isSuccessful());
+    }
+
+    public function testTransactionNotPermittedGetTransactionReference()
+    {
+        $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
+        $this->assertSame('3233151711', $response->getTransactionReference());
+    }
+
+    public function testTransactionNotPermittedActionResponseCode()
+    {
+        $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
+        $this->assertSame('12', $response->getResponseActionCode());
+    }
+
+    public function testTransactionNotPermittedActionResponseMessage()
+    {
+        $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
+        $this->assertSame('Decline', $response->getResponseActionMessage());
+    }
+
     private function transactionNotPermittedPurchaseResponse(): string
     {
         return <<<RESPONSE
@@ -118,11 +160,11 @@ RESPONSE;
 
     private function generateResponse($response_from_gateway): Response
     {
-        return new Response(new TestRequest(), new SimpleXMLElement($response_from_gateway));
+        return new Response(new TestRequest(), new \SimpleXMLElement($response_from_gateway));
     }
 
-    private function xmlResponse($response_from_gateway): DOMElement
+    private function xmlResponse($response_from_gateway): \DOMElement
     {
-        return dom_import_simplexml(new SimpleXMLElement($response_from_gateway));
+        return dom_import_simplexml(new \SimpleXMLElement($response_from_gateway));
     }
 }

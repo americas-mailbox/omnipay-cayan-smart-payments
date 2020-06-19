@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace tests\Message;
+
 use League\SmartPayments\Test\Fixture\TestRequest;
 use Omnipay\SmartPayments\Message\CreateCardResponse;
 use Omnipay\Tests\TestCase;
@@ -38,6 +40,6 @@ RESPONSE;
 
     private function generateResponse(): CreateCardResponse
     {
-        return new CreateCardResponse(new TestRequest(), new SimpleXMLElement($this->gatewayPurchaseResponse()));
+        return new CreateCardResponse(new TestRequest(), new \SimpleXMLElement($this->gatewayPurchaseResponse()));
     }
 }
