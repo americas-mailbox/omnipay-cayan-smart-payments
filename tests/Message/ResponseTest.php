@@ -196,6 +196,58 @@ RESPONSE;
 RESPONSE;
     }
 
+    public function testOriginalTransactionNotFoundGetData()
+    {
+        $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
+        $this->assertEqualXMLStructure(
+            $this->xmlResponse($this->originalTransactionNotFoundResponse()),
+            dom_import_simplexml($response->getData())
+        );
+    }
+
+    public function testOriginalTransactionNotFoundGetMessage()
+    {
+        $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
+        $this->assertSame('Orig Tx not found.', $response->getMessage());
+    }
+
+    public function testIsFailedDueToOriginalTransactionNotFound()
+    {
+        $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
+        $this->assertSame(false, $response->isSuccessful());
+    }
+
+    public function testOriginalTransactionNotFoundTransactionReference()
+    {
+        $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
+        $this->assertSame('', $response->getTransactionReference());
+    }
+
+    public function testOriginalTransactionNotFoundActionResponseCode()
+    {
+        $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
+        $this->assertSame('19', $response->getResponseActionCode());
+    }
+
+    public function testOriginalTransactionNotFoundActionResponseMessage()
+    {
+        $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
+        $this->assertSame('Original Transaction ID Not Found', $response->getResponseActionMessage());
+    }
+
+    private function originalTransactionNotFoundResponse(): string
+    {
+        return <<<RESPONSE
+<?xml version="1.0" encoding="utf-8"?>
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://TPISoft.com/SmartPayments/">
+  <Result>19</Result>
+  <RespMSG>Original Transaction ID Not Found</RespMSG>
+  <Message>Orig Tx not found.</Message>
+  <ExtData>InvNum=WEB </ExtData>
+</Response>
+RESPONSE;
+    }
+
 
     private function generateResponse($response_from_gateway): Response
     {
