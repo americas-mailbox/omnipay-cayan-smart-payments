@@ -137,6 +137,45 @@ RESPONSE;
 RESPONSE;
     }
 
+    public function testExpiredCardPurchaseResponseGetData()
+    {
+        $response = $this->generateResponse($this->expiredCardPurchaseResponse());
+        $this->assertEqualXMLStructure(
+            $this->xmlResponse($this->expiredCardPurchaseResponse()),
+            dom_import_simplexml($response->getData())
+        );
+    }
+
+    public function testExpiredCardPurchaseResponseGetMessage()
+    {
+        $response = $this->generateResponse($this->expiredCardPurchaseResponse());
+        $this->assertSame('54: Expired Card', $response->getMessage());
+    }
+
+    public function testIsFailedDueToExpiredCardPurchaseResponse()
+    {
+        $response = $this->generateResponse($this->expiredCardPurchaseResponse());
+        $this->assertSame(false, $response->isSuccessful());
+    }
+
+    public function testExpiredCardPurchaseResponseTransactionReference()
+    {
+        $response = $this->generateResponse($this->expiredCardPurchaseResponse());
+        $this->assertSame('3233116162', $response->getTransactionReference());
+    }
+
+    public function testExpiredCardPurchaseResponseActionResponseCode()
+    {
+        $response = $this->generateResponse($this->expiredCardPurchaseResponse());
+        $this->assertSame('12', $response->getResponseActionCode());
+    }
+
+    public function testExpiredCardPurchaseResponseActionResponseMessage()
+    {
+        $response = $this->generateResponse($this->expiredCardPurchaseResponse());
+        $this->assertSame('Decline', $response->getResponseActionMessage());
+    }
+
     private function expiredCardPurchaseResponse(): string
     {
         return <<<RESPONSE
