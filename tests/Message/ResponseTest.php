@@ -27,7 +27,7 @@ class ResponseTest extends TestCase
     public function testSuccessGetMessage()
     {
         $response = $this->generateResponse($this->gatewaySuccessPurchaseResponse());
-        $this->assertSame('00: Approved and completed', $response->getMessage());
+        $this->assertSame('Approved and completed', $response->getMessage());
     }
 
     public function testIsSuccessful()
@@ -79,7 +79,7 @@ RESPONSE;
     public function testTransactionNotPermittedGetMessage()
     {
         $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
-        $this->assertSame('57: Transaction not Permitted-Card', $response->getMessage());
+        $this->assertSame('Transaction not Permitted-Card', $response->getMessage());
     }
 
     public function testIsFailed()
@@ -133,7 +133,7 @@ RESPONSE;
     public function testExpiredCardPurchaseResponseGetMessage()
     {
         $response = $this->generateResponse($this->expiredCardPurchaseResponse());
-        $this->assertSame('54: Expired Card', $response->getMessage());
+        $this->assertSame('Expired Card', $response->getMessage());
     }
 
     public function testIsFailedDueToExpiredCardPurchaseResponse()
