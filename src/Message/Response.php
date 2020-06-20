@@ -10,7 +10,7 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class Response extends AbstractResponse
 {
-    /** @var SimpleXMLElement */
+    /** @var \SimpleXMLElement */
     protected $data;
 
     public function getCode(): string
