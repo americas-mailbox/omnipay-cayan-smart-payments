@@ -15,31 +15,24 @@ class Response extends AbstractResponse
 
     public function getCode(): string
     {
-        return (string) $this->data->AuthCode;
+        return $this->isSuccessful() ? (string)$this->data->AuthCode : (string)$this->data->Result;
     }
 
     public function getMessage(): string
     {
-        return (string) $this->data->Message;
+        if ($this->getCode() == '19' && $this->data->Message == 'Orig Tx not found.') {
+            return (string)$this->data->RespMSG;
+        }
+        return (string)$this->data->Message;
     }
 
     public function isSuccessful(): bool
     {
-        return ((string) $this->data->RespMSG) === 'Approved' ? true : false;
+        return ((string)$this->data->RespMSG) === 'Approved' ? true : false;
     }
 
     public function getTransactionReference(): string
     {
-        return (string) $this->data->PNRef;
-    }
-
-    public function getResponseActionCode(): string
-    {
-        return (string) $this->data->Result;
-    }
-
-    public function getResponseActionMessage(): string
-    {
-        return (string) $this->data->RespMSG;
+        return (string)$this->data->PNRef;
     }
 }

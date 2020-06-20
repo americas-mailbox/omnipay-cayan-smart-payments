@@ -42,17 +42,6 @@ class ResponseTest extends TestCase
         $this->assertSame('1299542956', $response->getTransactionReference());
     }
 
-    public function testSuccessActionResponseCode()
-    {
-        $response = $this->generateResponse($this->gatewaySuccessPurchaseResponse());
-        $this->assertSame('0', $response->getResponseActionCode());
-    }
-
-    public function testSuccessActionResponseMessage()
-    {
-        $response = $this->generateResponse($this->gatewaySuccessPurchaseResponse());
-        $this->assertSame('Approved', $response->getResponseActionMessage());
-    }
 
     private function gatewaySuccessPurchaseResponse(): string
     {
@@ -108,14 +97,9 @@ RESPONSE;
     public function testTransactionNotPermittedActionResponseCode()
     {
         $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
-        $this->assertSame('12', $response->getResponseActionCode());
+        $this->assertSame('12', $response->getCode());
     }
 
-    public function testTransactionNotPermittedActionResponseMessage()
-    {
-        $response = $this->generateResponse($this->transactionNotPermittedPurchaseResponse());
-        $this->assertSame('Decline', $response->getResponseActionMessage());
-    }
 
     private function transactionNotPermittedPurchaseResponse(): string
     {
@@ -167,14 +151,9 @@ RESPONSE;
     public function testExpiredCardPurchaseResponseActionResponseCode()
     {
         $response = $this->generateResponse($this->expiredCardPurchaseResponse());
-        $this->assertSame('12', $response->getResponseActionCode());
+        $this->assertSame('12', $response->getCode());
     }
 
-    public function testExpiredCardPurchaseResponseActionResponseMessage()
-    {
-        $response = $this->generateResponse($this->expiredCardPurchaseResponse());
-        $this->assertSame('Decline', $response->getResponseActionMessage());
-    }
 
     private function expiredCardPurchaseResponse(): string
     {
@@ -208,7 +187,7 @@ RESPONSE;
     public function testOriginalTransactionNotFoundGetMessage()
     {
         $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
-        $this->assertSame('Orig Tx not found.', $response->getMessage());
+        $this->assertSame('Original Transaction ID Not Found', $response->getMessage());
     }
 
     public function testIsFailedDueToOriginalTransactionNotFound()
@@ -226,13 +205,7 @@ RESPONSE;
     public function testOriginalTransactionNotFoundActionResponseCode()
     {
         $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
-        $this->assertSame('19', $response->getResponseActionCode());
-    }
-
-    public function testOriginalTransactionNotFoundActionResponseMessage()
-    {
-        $response = $this->generateResponse($this->originalTransactionNotFoundResponse());
-        $this->assertSame('Original Transaction ID Not Found', $response->getResponseActionMessage());
+        $this->assertSame('19', $response->getCode());
     }
 
     private function originalTransactionNotFoundResponse(): string
