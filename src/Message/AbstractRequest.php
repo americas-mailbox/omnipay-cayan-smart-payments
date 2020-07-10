@@ -37,20 +37,13 @@ abstract class AbstractRequest extends BaseAbstractRequest
     {
         $data['InvNum'] = 'WEB ';
         $url = $this->getEndpoint().'?'.http_build_query($data, '', '&');
-        $post_string = http_build_query($data, '', '&');
-        //        $response = $this->httpClient->post($url);
-        // Standard payment gateway transaction
-        // Use the CURL library to establish a connection,
-        // submit the post, and record the response.
-        $request = curl_init($this->getEndpoint().'?'); // initiate curl object
-        curl_setopt($request, CURLOPT_HEADER, 0); // set to 0 to eliminate header info from response
-        curl_setopt($request, CURLOPT_RETURNTRANSFER, 1); // Returns response data instead of TRUE(1)
-        curl_setopt($request, CURLOPT_POSTFIELDS, $post_string); // use HTTP POST to send form data
-        //curl_setopt($request, CURLOPT_SSL_VERIFYPEER, FALSE); // uncomment this line if you get no gateway response.
-        $response = curl_exec($request); // execute curl post and store results in $this->response
-        curl_close($request); // close curl object
+        $response = $this->httpClient->request(
+            'GET',
+            $url
+        );
+        $body = (string) $response->getBody();
 
-        return $this->createResponse($response);
+        return $this->createResponse($body);
     }
 
     protected function getBaseData()
