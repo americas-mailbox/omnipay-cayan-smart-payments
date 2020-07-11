@@ -12,7 +12,6 @@
         "ext-simplexml": "*",
         "omnipay/common": "^3"
     },
-    "version": "1.0.1",
     "require-dev": {
         "ext-dom": "*",
         "omnipay/tests": "^3",
