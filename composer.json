@@ -10,7 +10,7 @@
     "require": {
         "php": ">=7.3",
         "ext-simplexml": "*",
-        "omnipay/common": "^3"
+        "omnipay/common": "^3.0.5"
     },
     "require-dev": {
         "ext-dom": "*",
