@@ -23,7 +23,9 @@ class Response extends AbstractResponse
         if ($this->getCode() == '19' && $this->data->Message == 'Orig Tx not found.') {
             return (string)$this->data->RespMSG;
         }
-        return trim(preg_replace('/\d+:/', '', $this->data->Message));
+        $message =  !empty($this->data->Message) ? (string) $this->data->Message : (string) $this->data->RespMSG;
+
+        return trim(preg_replace('/\d+:/', '', $message));
     }
 
     public function isSuccessful(): bool
